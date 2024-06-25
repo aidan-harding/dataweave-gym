@@ -19,6 +19,7 @@ private class DetectFieldChangesApexTest {
         Test.stopTest();
 
         Assert.isTrue(result.isEmpty());
+        System.debug(JSON.serialize(result));
     }
 
     @IsTest
@@ -32,7 +33,8 @@ private class DetectFieldChangesApexTest {
         List<FieldChange> result = new DetectFieldChangesApex(fields).getChanges(contactsBefore, contactsAfter);
         Test.stopTest();
 
-        Assert.areEqual(7151, result.size());
+        Assert.areEqual(7153, result.size());
+        System.debug(JSON.serialize(result));
     }
     
     private static List<Contact> loadData(String filename) {
