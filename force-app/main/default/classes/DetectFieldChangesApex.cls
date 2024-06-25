@@ -40,8 +40,8 @@ public class DetectFieldChangesApex {
                     !(oldValue == null && newValue == null) &&
                             (oldValue != newValue || (oldValue instanceof String && !((String) oldValue).equals((String) newValue)))
             ) {
-                String oldValueEntry = JSON.serialize(String.valueOf(oldValue));
-                String newValueEntry = JSON.serialize(String.valueOf(newValue));
+                String oldValueEntry = String.valueOf(oldValue);
+                String newValueEntry = String.valueOf(newValue);
                 result.add(new FieldChange(thisField, oldValueEntry, newValueEntry));
             }
         }
