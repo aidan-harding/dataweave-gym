@@ -6,9 +6,15 @@
 
 public class LimitsMeasure {
 
-    private Integer startCpu = Limits.getCpuTime();
-    
+    private Integer startCpu;
+    private Integer size;
+
+    public LimitsMeasure(Integer size) {
+        this.size = size;
+        this.startCpu = Limits.getCpuTime();
+    }
+
     public void stopAndPrint() {
-        System.debug((Limits.getCpuTime() - startCpu) + '+');
+        System.debug(size + ',' + (Limits.getCpuTime() - startCpu));
     }
 }
