@@ -15,6 +15,6 @@ public class LimitsMeasure {
     }
 
     public void stopAndPrint() {
-        System.debug(size + ',' + (Limits.getCpuTime() - startCpu));
+        System.debug(size + ', ' + (Limits.getCpuTime() - startCpu));
     }
 }
