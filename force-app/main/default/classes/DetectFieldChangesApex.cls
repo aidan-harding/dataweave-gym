@@ -17,14 +17,12 @@ public class DetectFieldChangesApex {
     public List<FieldChange> getChanges(List<SObject> oldRecords, List<SObject> newRecords) {
         List<FieldChange> result = new List<FieldChange>();
         for(Integer i=0, size = oldRecords.size(); i < size; i++) {
-            result.addAll(getChanges(oldRecords[i], newRecords[i]));
+            getChanges(oldRecords[i], newRecords[i], result);
         }
         return result;
     }
 
-    public List<FieldChange> getChanges(SObject oldRecord, SObject newRecord) {
-        List<FieldChange> result = new List<FieldChange>();
-
+    public List<FieldChange> getChanges(SObject oldRecord, SObject newRecord, List<FieldChange> result) {
         if (oldRecord == newRecord) {
             return result;
         }
