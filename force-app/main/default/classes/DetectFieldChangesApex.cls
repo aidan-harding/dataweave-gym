@@ -40,7 +40,7 @@ public class DetectFieldChangesApex {
             ) {
                 String oldValueEntry = String.valueOf(oldValue);
                 String newValueEntry = String.valueOf(newValue);
-                result.add(new FieldChange(thisField, oldValueEntry, newValueEntry));
+                result.add(new FieldChange(newRecord.Id, thisField, oldValueEntry, newValueEntry));
             }
         }
         return result;

@@ -7,7 +7,16 @@
 private class DetectFieldChangesDataWeaveTest {
 
     static DataWeave.Script detectFieldChangesScript = new DataWeaveScriptResource.detectFieldChanges();
-    
+    static IdGenerator contactIdGenerator = IdGenerator.getIdGenerator(Contact.SObjectType);
+    static List<Contact> oldList = new List<Contact>{
+            new Contact(Id = contactIdGenerator.next(), FirstName = 'Sebastian', LastName = 'Roberts'),
+            new Contact(Id = contactIdGenerator.next(), FirstName = 'Henry', LastName = 'Cooper')
+    };
+    static List<Contact> newList = new List<Contact>{
+            new Contact(Id = oldList[0].Id, FirstName = 'Sebastian', LastName = 'roberts'),
+            new Contact(Id = oldList[1].Id, FirstName = null, LastName = 'Cooper')
+    };
+
     @IsTest
     static void emptyLists() {
 
@@ -24,15 +33,6 @@ private class DetectFieldChangesDataWeaveTest {
 
     @IsTest
     static void twoRecords() {
-        List<Contact> oldList = new List<Contact>{
-                new Contact(FirstName = 'Sebastian', LastName = 'Roberts'),
-                new Contact(FirstName = 'Henry', LastName = 'Cooper')
-        };
-        List<Contact> newList = new List<Contact>{
-                new Contact(FirstName = 'Sebastian', LastName = 'roberts'),
-                new Contact(FirstName = null, LastName = 'Cooper')
-        };
-
         DataWeave.Result result = detectFieldChangesScript.execute(new Map<String, Object>{
                 'oldList' => oldList,
                 'newList' => newList,
@@ -47,25 +47,18 @@ private class DetectFieldChangesDataWeaveTest {
         Assert.areEqual('LastName', fieldChanges[0].field);
         Assert.areEqual('Roberts', fieldChanges[0].oldValue);
         Assert.areEqual('roberts', fieldChanges[0].newValue);
-
+        Assert.areEqual(newList[0].Id, fieldChanges[0].recordId);
+        
         Assert.areEqual('FirstName', fieldChanges[1].field);
         Assert.areEqual('Henry', fieldChanges[1].oldValue);
         Assert.areEqual(null, fieldChanges[1].newValue);
+        Assert.areEqual(newList[1].Id, fieldChanges[1].recordId);
     }
     
     @IsTest
     static void twoRecordsJson() {
         detectFieldChangesScript = new DataWeaveScriptResource.detectFieldChangesJson();
         
-        List<Contact> oldList = new List<Contact>{
-                new Contact(FirstName = 'Sebastian', LastName = 'Roberts'),
-                new Contact(FirstName = 'Henry', LastName = 'Cooper')
-        };
-        List<Contact> newList = new List<Contact>{
-                new Contact(FirstName = 'Sebastian', LastName = 'roberts'),
-                new Contact(FirstName = null, LastName = 'Cooper')
-        };
-
         DataWeave.Result result = detectFieldChangesScript.execute(new Map<String, Object>{
                 'oldList' => JSON.serialize(oldList),
                 'newList' => JSON.serialize(newList),
@@ -80,9 +73,11 @@ private class DetectFieldChangesDataWeaveTest {
         Assert.areEqual('LastName', fieldChanges[0].field);
         Assert.areEqual('Roberts', fieldChanges[0].oldValue);
         Assert.areEqual('roberts', fieldChanges[0].newValue);
+        Assert.areEqual(newList[0].Id, fieldChanges[0].recordId);
 
         Assert.areEqual('FirstName', fieldChanges[1].field);
         Assert.areEqual('Henry', fieldChanges[1].oldValue);
         Assert.areEqual(null, fieldChanges[1].newValue);
+        Assert.areEqual(newList[1].Id, fieldChanges[1].recordId);
     }
 }
