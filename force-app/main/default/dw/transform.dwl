@@ -1,6 +1,8 @@
 %dw 2.0
 input records application/apex
 input transforms application/apex
+output application/json
+
 import * from dw::core::Strings
 
 fun transformValue(value, transformation) = do {
@@ -17,7 +19,7 @@ fun transformValue(value, transformation) = do {
 fun transformRecord(record) = 
     transforms reduce ((item, acc = {}) -> acc ++ { 
         (item.targetField): transformValue((record[item.sourceField]), item.transformation)
-    })
+    }) 
 
 ---
 records map (record) -> transformRecord(record)
