@@ -12,8 +12,10 @@ step_size=$4
 iterations=$5
 output_file=$6
 
+rm -f "$output_file" || true
+
 for ((size=start_size; size <= end_size; size += step_size)); do
   for i in $(seq 1 "$iterations"); do
-      echo "Integer size=$size;" | cat - "$apex_file" | sf apex run | sed -rn 's/.*USER_DEBUG\|\[[0-9]+\]\|DEBUG\|(.*)/\1/p' >> "$output_file" 
+      echo "Integer size=$size;" | cat - "$apex_file" | sf apex run | sed -rn 's/.*USER_DEBUG\|\[[0-9]+\]\|DEBUG\|(.*)/\1,/p;s/.*Maximum heap size: (.*) out of.*/\1/p' | awk 'NR%2{printf "%s ",$0;next;}1' >> "$output_file" 
   done
 done
