@@ -4,8 +4,8 @@ List<Contact> contactsBefore = fieldChangeDataProvider.loadData('ContactsTestDat
 contactsBefore = Lists.slice(contactsBefore, 0, size);
 
 LimitsMeasure limitsMeasure = new LimitsMeasure(size);
-DataWeave.Script detectFieldChangesScript = new DataWeaveScriptResource.apexToJson();
-String result = detectFieldChangesScript.execute(
+DataWeave.Script dataWeaveScript = new DataWeaveScriptResource.apexToJson();
+String result = dataWeaveScript.execute(
         new Map<String, Object>{
                 'inList' => contactsBefore
         }
