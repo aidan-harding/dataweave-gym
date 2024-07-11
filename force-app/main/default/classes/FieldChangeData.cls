@@ -15,4 +15,8 @@ public with sharing class FieldChangeData {
                 [SELECT Body FROM StaticResource WHERE Name = :filename].Body.toString(),
                 List<Contact>.class);
     }
+
+    public List<Contact> loadData(String filename, Integer size) {
+        return Lists.slice(loadData(filename),0, size);
+    }
 }
