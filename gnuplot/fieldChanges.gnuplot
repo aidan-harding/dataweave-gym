@@ -26,14 +26,14 @@ set style circle radius 15
 set ylabel "CPU Time (ms)"
 set xlabel "# records"
 
-set output 'graphs/naiveApex.png'
+set output 'graphs/fieldChangesNaiveApex.png'
 plot [900:6100] [0:*] apexNaive(x) linecolor 1 notitle, "csv/ApexNaiveDetectFieldChanges.csv" with circle linecolor 1 title "Naïve Apex"
 
-set output 'graphs/bothApex.png'
+set output 'graphs/fieldChangesBothApex.png'
 plot [900:6100] [0:*] apexNaive(x) linecolor 1 notitle, "csv/ApexNaiveDetectFieldChanges.csv" with circle linecolor 1 title "Naïve Apex", \
  apex(x) linecolor 2 notitle, "csv/ApexDetectFieldChanges.csv" linecolor 2 with circle title "Apex"
 
-set output 'graphs/apexAndDataWeave.png'
+set output 'graphs/fieldChangesApexAndDataWeave.png'
 plot [900:6100] [0:*] apexNaive(x) linecolor 1 notitle, "csv/ApexNaiveDetectFieldChanges.csv" with circle linecolor 1 title "Naïve Apex", \
  apex(x) linecolor 2 notitle, "csv/ApexDetectFieldChanges.csv" linecolor 2 with circle title "Apex", \
   dataWeave(x)  linecolor 3 notitle, "csv/DataWeaveDetectFieldChanges.csv" with circle linecolor 3 title "DataWeave"
@@ -42,4 +42,4 @@ plot [900:6100] [0:*] apexNaive(x) linecolor 1 notitle, "csv/ApexNaiveDetectFiel
  # plot [900:6100] [0:*] apexNaive(x) linecolor 1 notitle, "csv/ApexNaiveDetectFieldChanges.csv" with circle linecolor 1 title "Naïve Apex", \
  #  apex(x) linecolor 2 notitle, "csv/ApexDetectFieldChanges.csv" linecolor 2 with circle title "Apex", \
  #   dataWeave(x)  linecolor 3 notitle, "csv/DataWeaveDetectFieldChanges.csv" with circle linecolor 3 title "DataWeave", \
- #    dataWeaveJson(x)  linecolor 4 notitle, "csv/dataWeaveJson531.csv" with circle linecolor 4 title "DataWeave JSON" 
+ #    dataWeaveJson(x)  linecolor 4 notitle, "csv/dataWeaveJson531.csv" with circle linecolor 4 title "DataWeave (JSON input)" 
