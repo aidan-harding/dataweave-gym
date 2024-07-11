@@ -4,14 +4,14 @@ input oldList application/json
 input fieldList application/json
 output application/json
 
-fun compareFields(record1, record2) =
-    fieldList filter ((field) -> (record1[field] != record2[field])) 
-        map (field) -> {
-                "recordId": record1.Id,
-                "field": field,
-                "newValue": record1[field] as String default null,
-                "oldValue": record2[field] as String default null
-            } as Object {class: "FieldChange"}
+fun compareFields(oldRecord, newRecord) =
+   fieldList filter ((field) -> (oldRecord[field] != newRecord[field]))
+       map (field) -> {
+               "recordId": newRecord.Id,
+               "field": field,
+               "oldValue": oldRecord[field] as String default null,
+               "newValue": newRecord[field] as String default null
+           } as Object {class: "FieldChange"}
             
 ---
-flatten(newList map ((record, index) -> compareFields(record, oldList[index])))
+flatten(oldList map ((oldRecord, index) -> compareFields(oldRecord, newList[index])))
