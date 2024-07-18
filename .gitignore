@@ -1,2 +1,2 @@
-/graphs/
-/csv/
+*.csv
+*.png
