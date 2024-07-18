@@ -39,7 +39,7 @@ mkdir graphs
 Then extract all the data to CSV files:
 
 ```zsh
-sf data query --query 'SELECT ExperimentName__c FROM PerformanceMeasureResult__c GROUP BY ExperimentName__c' --json | jq -r '.result.records[].ExperimentName__c' | xargs -I {} zsh -c "sf data query --query \"SELECT Size__c, CpuTimeInMs__c FROM PerformanceMeasureResult__c WHERE ExperimentName__c = '{}' ORDER BY Size__c\" --result-format csv > csv/{}.csv"
+sf data query --query 'SELECT ExperimentName__c FROM PerformanceMeasureResult__c GROUP BY ExperimentName__c' --json | jq -r '.result.records[].ExperimentName__c' | xargs -I {} zsh -c "sf data query --query \"SELECT Size__c, CpuTimeInMs__c FROM PerformanceMeasureResult__c WHERE ExperimentName__c = '{}' AND Result__c = 'SUCCESS' ORDER BY Size__c\" --result-format csv > csv/{}.csv"
 ```
 
 This gets all the experiment names, processes the result with jq, then feeds them into xargs so that they can be queried individually and put into 
@@ -50,6 +50,7 @@ Then use `gnuplot` to plot the data. There are scripts included here in the repo
 
 ```zsh
 gnuplot -d gnuplot/fieldChanges.gnuplot
+gnuplot -d gnuplot/passThrough.gnuplot
 ```
 
 You will see the results in the graphs/ directory.
