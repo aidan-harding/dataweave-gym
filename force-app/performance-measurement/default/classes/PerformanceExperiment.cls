@@ -97,7 +97,7 @@ public with sharing class PerformanceExperiment implements Queueable {
     }
     
     private Integer getRequiredStackDepth() {
-        return repetitions * (endSize - thisStep + stepSize)/stepSize + (thenRun?.getRequiredStackDepth() ?? 0);
+        return repetitions * (endSize - thisStep + stepSize)/stepSize + (thenRun?.getRequiredStackDepth() ?? 1);
     }
 
     public void run() {
